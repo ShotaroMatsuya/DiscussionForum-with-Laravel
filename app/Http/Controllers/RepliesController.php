@@ -2,17 +2,14 @@
 
 namespace LaravelForum\Http\Controllers;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use LaravelForum\Discussion;
-use LaravelForum\Http\Requests\CreateDiscussionRequest;
 
-class DiscussionsController extends Controller
+use Illuminate\Http\Request;
+
+use LaravelForum\Discussion;
+use LaravelForum\Http\Requests\CreateReplyRequest;
+
+class RepliesController extends Controller
 {
-    public function __construct() //middlewareを適用する
-    {
-        $this->middleware('auth')->only(['create', 'store']);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +17,7 @@ class DiscussionsController extends Controller
      */
     public function index()
     {
-        return view('discussions.index', [
-            'discussions' => Discussion::paginate(5)
-        ]);
+        //
     }
 
     /**
@@ -32,7 +27,7 @@ class DiscussionsController extends Controller
      */
     public function create()
     {
-        return view('discussions.create');
+        //
     }
 
     /**
@@ -41,17 +36,14 @@ class DiscussionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateDiscussionRequest $request)
-    {  //userメソッドからcreateを実行することでuser_idが自動的にセットされる
-        auth()->user()->discussions()->create([
-            'title' => $request->title,
+    public function store(CreateReplyRequest $request, Discussion $discussion)
+    {
+        auth()->user()->replies()->create([
             'content' => $request->content,
-            'slug' => Str::slug($request->title),
-            'channel_id' => $request->channel
-
+            'discussion_id' => $discussion->id
         ]);
-        session()->flash('success', 'Discussion posted.');
-        return redirect()->route('discussions.index');
+        session()->flash('success', 'Reply added.');
+        return redirect()->back();
     }
 
     /**
@@ -60,11 +52,9 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Discussion $discussion) //Model内のgetRouteKeyNameメソッドで参照元をslugに変更した
+    public function show($id)
     {
-        return view('discussions.show', [
-            'discussion' => $discussion
-        ]);
+        //
     }
 
     /**

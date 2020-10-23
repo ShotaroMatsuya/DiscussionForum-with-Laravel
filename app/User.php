@@ -2,6 +2,7 @@
 
 namespace LaravelForum;
 
+use LaravelForum\Reply;
 use LaravelForum\Discussion;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -40,5 +41,9 @@ class User extends Authenticatable
     public function discussions()
     {
         return $this->hasMany(Discussion::class);
+    }
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
 }
