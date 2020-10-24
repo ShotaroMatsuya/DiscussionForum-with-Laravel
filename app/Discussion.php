@@ -22,8 +22,22 @@ class Discussion extends Model
     {
         return 'slug'; //slugを参照するようにoverwriteした
     }
-    public function replies()
+    public function replies() //すべてのreplyを取得
     {
         return $this->hasMany(Reply::class);
+    }
+    // public function getBestReply()
+    // {
+    //     return Reply::find($this->reply_id);
+    // }
+    public function bestReply() //bestReplyのみを取得
+    {
+        return $this->belongsTo(Reply::class, 'reply_id');
+    }
+    public function markAsBestReply(Reply $reply)
+    {
+        $this->update([
+            'reply_id' => $reply->id
+        ]);
     }
 }
