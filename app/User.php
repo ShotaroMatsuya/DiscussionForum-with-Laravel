@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable; //userモデルからnotification関連のメソッドを使用する事ができる
 
     /**
      * The attributes that are mass assignable.

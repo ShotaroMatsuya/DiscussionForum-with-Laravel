@@ -47,13 +47,16 @@
                 <span>{{$reply->owner->name}}</span>
                 </div>
                 <div>
-                @if (auth()->user()->id == $discussion->user_id)
-                <form action="{{route('discussions.best-reply',['discussion'=>$discussion->slug,'reply'=>$reply->id])}}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-info">mark as best reply</button>
-                </form>
+                    @auth
+                    @if (auth()->user()->id == $discussion->user_id)
+                    <form action="{{route('discussions.best-reply',['discussion'=>$discussion->slug,'reply'=>$reply->id])}}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-info">mark as best reply</button>
+                    </form>
 
-                @endif
+                    @endif
+
+                    @endauth
                 </div>
             </div>
         </div>
@@ -72,7 +75,7 @@
 
         <div class="card-body">
             @auth
-        <form action="{{route('replies.store',$discussion->slug)}}" method="POST">
+            <form action="{{route('replies.store',$discussion->slug)}}" method="POST">
                 @csrf
                 <input type="hidden" name="content" id="content">
                 <trix-editor input="content"></trix-editor>

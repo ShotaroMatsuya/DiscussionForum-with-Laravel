@@ -2,6 +2,7 @@
 
 namespace LaravelForum;
 
+use LaravelForum\Notifications\ReplyMarkedAsBestReply;
 use LaravelForum\Reply;
 
 
@@ -36,8 +37,12 @@ class Discussion extends Model
     }
     public function markAsBestReply(Reply $reply)
     {
+        //discussionsテーブルのupdate
         $this->update([
             'reply_id' => $reply->id
         ]);
+        //notificationの送信
+        //notification関連のメソッドはuserモデルのインスタンスを解す必要がある点に注意
+        $reply->owner->notify(new ReplyMarkedAsBestReply($reply->discussion));
     }
 }

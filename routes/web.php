@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use LaravelForum\Http\Controllers\UsersController;
 
 
 
@@ -26,4 +27,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('discussions', 'DiscussionsController');
 
 Route::resource('discussions/{discussion}/replies', 'RepliesController');
+Route::get('users/notifications', [UsersController::class, 'notifications'])->name('users.notifications');
 Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply', 'DiscussionsController@reply')->name('discussions.best-reply');
