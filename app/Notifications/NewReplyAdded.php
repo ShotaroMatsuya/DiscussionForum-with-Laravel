@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use LaravelForum\Discussion;
 
-class NewReplyAdded extends Notification
+class NewReplyAdded extends Notification implements ShouldQueue //ShouldQueueクラスをimplementすることでnotificationをキューで処理する(UXが向上する)
 {
     use Queueable;
     /**

@@ -10,9 +10,10 @@ use LaravelForum\Http\Requests\CreateDiscussionRequest;
 
 class DiscussionsController extends Controller
 {
-    public function __construct() //middlewareを適用する
+    public function __construct() //middlewareを適用する(登録しかつメール認証を完了したユーザーのみdiscussionを新規作成できる)
     {
-        $this->middleware('auth')->only(['create', 'store']);
+        // $this->middleware(['auth'])->only(['create', 'store']);
+        $this->middleware(['auth', 'verified'])->only(['create', 'store']);
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +23,7 @@ class DiscussionsController extends Controller
     public function index()
     {
         return view('discussions.index', [
-            'discussions' => Discussion::paginate(5)
+            'discussions' => Discussion::filterByChannels()->paginate(3) //filterByChannelsはクエリスコープ
         ]);
     }
 

@@ -17,6 +17,6 @@
 </div>
 
 @endforeach
-{{-- ペジネーションリンク --}}
-{{$discussions->links()}}
+{{-- ペジネーションリンク ページ変えたあとにもchannelのクエリ文字列を残すappendsメソッド --}}
+{{$discussions->appends(['channel'=>request()->query('channel')])->links()}}
 @endsection

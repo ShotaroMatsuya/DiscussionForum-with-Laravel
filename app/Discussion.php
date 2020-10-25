@@ -2,8 +2,9 @@
 
 namespace LaravelForum;
 
-use LaravelForum\Notifications\ReplyMarkedAsBestReply;
 use LaravelForum\Reply;
+use LaravelForum\Channel;
+use LaravelForum\Notifications\ReplyMarkedAsBestReply;
 
 
 
@@ -35,12 +36,32 @@ class Discussion extends Model
     {
         return $this->belongsTo(Reply::class, 'reply_id');
     }
+    public function scopeFilterByChannels($builder)
+    { //クエリスコープの作成
+        if (request()->query('channel')) {
+            //filter
+            $channel = Channel::where('slug', request()->query('channel'))->first();
+            if ($channel) {
+                return $builder->where('channel_id', $channel->id);
+            }
+            return $builder; //見つからなかった場合
+        }
+        return $builder;
+    }
+
+
+
+
     public function markAsBestReply(Reply $reply)
     {
         //discussionsテーブルのupdate
         $this->update([
             'reply_id' => $reply->id
         ]);
+
+        if ($reply->owner->id == $this->author->id) { //discussionのauthorが自分のreplyをMarkしたときにはnotificationをさせない
+            return;
+        }
         //notificationの送信
         //notification関連のメソッドはuserモデルのインスタンスを解す必要がある点に注意
         $reply->owner->notify(new ReplyMarkedAsBestReply($reply->discussion));

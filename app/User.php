@@ -5,10 +5,11 @@ namespace LaravelForum;
 use LaravelForum\Reply;
 use LaravelForum\Discussion;
 use Illuminate\Notifications\Notifiable;
+use LaravelForum\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail //email-verificationを実装する
 {
     use Notifiable; //userモデルからnotification関連のメソッドを使用する事ができる
 
@@ -45,5 +46,10 @@ class User extends Authenticatable
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function sendEmailVerificationNotification() //MustVerifyEmailクラスのメソッドをoverwriteする
+    {
+        $this->notify(new VerifyEmail());
     }
 }

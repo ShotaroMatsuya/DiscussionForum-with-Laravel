@@ -43,7 +43,11 @@ class RepliesController extends Controller
             'content' => $request->content,
             'discussion_id' => $discussion->id
         ]);
-        $discussion->author->notify(new NewReplyAdded($discussion)); //emailとdatabaseにnotificationが送られる
+
+        if ($discussion->author->id != auth()->user()->id) { //discussionのauthorとreplyのuserが同じ場合にはnotifyを実行しない
+
+            $discussion->author->notify(new NewReplyAdded($discussion)); //emailとdatabaseにnotificationが送られる
+        }
 
 
         session()->flash('success', 'Reply added.');
