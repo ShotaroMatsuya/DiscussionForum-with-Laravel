@@ -77,7 +77,7 @@
 
         <div class="card-body">
             @auth
-            <form action="{{route('replies.store',$discussion->slug)}}" method="POST">
+            <form action="{{route('replies.store',$discussion->id)}}" method="POST">
                 @csrf
                 <input type="hidden" name="content" id="content">
                 <trix-editor input="content"></trix-editor>

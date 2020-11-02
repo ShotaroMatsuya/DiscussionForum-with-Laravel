@@ -7,15 +7,23 @@
         <div class="ml-auto">
 
             <div class="d-flex">
+                @guest
+                @if(in_array(request()->path(),['discussions']))
+                <a href="{{route('discussions.show',$discussion->id)}}" class="btn btn-success btn-sm">View</a>
+                @endif
+
+                @endguest
+
+
+                @auth
                 @if(!in_array(request()->path(),['discussions']))
                     @if ( auth()->user()->id == $discussion->author->id)
                     <a href="{{route('discussions.edit',$discussion->id)}}" class="btn btn-secondary btn-sm">Edit</a>
-
                     @endif
                 @else
-                <a href="{{route('discussions.show',$discussion->id)}}" class="btn btn-success btn-sm">View</a>
+                    <a href="{{route('discussions.show',$discussion->id)}}" class="btn btn-success btn-sm">View</a>
                 @endif
-                @if (auth()->user()->id == $discussion->author->id)
+                {{-- @if (auth()->user()->id == $discussion->author->id)
                 <form action="{{route('discussions.destroy',$discussion->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -23,7 +31,10 @@
 
                     </form>
 
-                @endif
+                @endif --}}
+
+
+                @endauth
 
             </div>
 
