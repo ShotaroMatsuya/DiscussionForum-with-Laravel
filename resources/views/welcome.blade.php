@@ -50,16 +50,29 @@
 
             .links > a {
                 color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
+                padding: 10px 25px;
+                font-size: 16px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+                background-color:  rgb(168, 210, 223);
+                border-radius: 3px;
             }
+            .links > a:hover{
+                background-color: #1b5674;
+                color:rgb(168, 210, 223);
+            }
+
 
             .m-b-md {
                 margin-bottom: 30px;
+            }
+            .slideText{
+                font-size: 24px;
+                font-weight: bold;
+                letter-spacing: 1.2;
+
             }
         </style>
     </head>
@@ -81,14 +94,29 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel Forum
+                    質問投議場
+                </div>
+                <div class="quote">
+                    <p class="slideText">A foolish speaks, the wise listens.</p>
+
                 </div>
 
                 <div class="links">
-                <a href="{{route('discussions.index')}}">Discussions</a>
+                <a href="{{route('discussions.index')}}">Discussionを覗いてみる</a>
 
                 </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="{{asset('js/jquery.slide-text-left.js')}}"></script>
+<script>
+$(function() {
+  $(".slideText").slideTextLeft({
+    words: ["愚者は語り、賢者は聞く by ソロモン -旧約聖書『箴言』","賢者は、話すべきことがあるから口を開く。愚者は、話さずにはいられないから口を開く。 by プラント", "知恵ある人は聞いて判断力を増し、分別ある人は導きを得る。 by ソロモン ー旧約聖書『箴言』", "知恵ある人は忠告に聞き従う。 by ソロモン -旧約聖書『箴言』","知る者は言わず、言う者は知らず by 『老子』-第56章","無知な者の口には高ぶりの芽、知恵ある人の唇は自分を守る。 by ソロモン -旧約聖書『箴言』","賢者が愚者から学ぶ事の方が、愚者が賢者に学ぶことより多い by モンテーニュ -『エセー』III-８"],
+    delay: 2000
+  });
+});
+</script>
+
     </body>
 </html>
