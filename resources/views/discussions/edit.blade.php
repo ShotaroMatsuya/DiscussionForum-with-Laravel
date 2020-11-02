@@ -4,29 +4,30 @@
 
 
 <div class="card">
-    <div class="card-header">質問を追加する</div>
+    <div class="card-header">質問を編集する</div>
 
     <div class="card-body">
-        <form action="{{ route('discussions.store') }}" method="POST">
+        <form action="{{ route('discussions.update',$discussion->id) }}" method="POST">
             @csrf
+            @method('PATCH')
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" name="title" value="">
+            <input type="text" class="form-control" name="title" value="{{$discussion->title}}">
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <input id="content" type="hidden" name="content">
-                <trix-editor input="content"></trix-editor>
+            <input id="content" value="{!! $discussion->content!!}" type="hidden" name="content">
+                <trix-editor input="content" ></trix-editor>
             </div>
             <div class="form-group">
                 <label for="channel">Channel</label>
                 <select name="channel" id="channel" class="form-control">
                     @foreach($channels as $channel)
-                <option value="{{$channel->id}}">{{$channel->name}}</option>
+                <option value="{{$channel->id}}" {{$discussion->channel_id == $channel->id ? 'selected': ''}}>{{$channel->name}}</option>
                     @endforeach
                 </select>
             </div>
-            <button type="submit" class="btn btn-success">新規作成</button>
+            <button type="submit" class="btn btn-success">内容を変更</button>
         </form>
     </div>
 </div>

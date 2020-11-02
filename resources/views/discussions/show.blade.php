@@ -11,7 +11,9 @@
         </div>
 
         <hr>
+
         {!!$discussion->content!!}
+
         @if ($discussion->bestReply)
         <div class="card bg-success my-5" style="color:#fff">
             <div class="card-header">
@@ -51,7 +53,7 @@
                     @if (auth()->user()->id == $discussion->user_id)
                     <form action="{{route('discussions.best-reply',['discussion'=>$discussion->slug,'reply'=>$reply->id])}}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-info">mark as best reply</button>
+                        <button type="submit" class="btn btn-sm btn-info">ベストアンサーにする</button>
                     </form>
 
                     @endif
@@ -80,13 +82,13 @@
                 <input type="hidden" name="content" id="content">
                 <trix-editor input="content"></trix-editor>
                 <button type="submit" class="btn btn-sm my-2 btn-success">
-                    Add Reply
+                    回答する
                 </button>
             </form>
 
             @else
 
-        <a href="{{route('login')}}" class="btn btn-info">Sign in to add a reply</a>
+        <a href="{{route('login')}}" class="btn btn-info">ログインして回答する</a>
             @endauth
         </div>
     </div>

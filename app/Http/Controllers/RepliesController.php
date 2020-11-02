@@ -50,7 +50,7 @@ class RepliesController extends Controller
         }
 
 
-        session()->flash('success', 'Reply added.');
+        session()->flash('success', '回答を投稿しました！');
         return redirect()->back();
     }
 

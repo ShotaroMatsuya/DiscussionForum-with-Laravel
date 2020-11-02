@@ -45,7 +45,7 @@
                         <a href="{{route('users.notifications')}}" class="nav-link">
                             <span class="badge badge-info">
                                 {{auth()->user()->unreadNotifications->count()}}
-                                Unread notifications
+                                未読
                             </span></a>
                         </li>
 
@@ -56,6 +56,7 @@
                         </a>
                         </li>
                     </ul>
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -97,15 +98,21 @@
             'login','register','password/email','password/reset'
         ]))
         <main class="container py-4">
+            @if(session('success'))
+<div class="alert alert-success">
+    {{-- {{Session::get('message')}} --}}
+    {{session('success')}}
+</div>
+@endif
             <div class="row">
                 <div class="col-md-4">
                     @auth
                     <a href="{{route('discussions.create')}}" style="width:100%" class="btn btn-info my-2">
-                        Add Discussion
+                        質問を作成する
                     </a>
                     @else
                     <a href="{{route('login')}}" style="width:100%" class="btn btn-info my-2">
-                        Sign in to add Descussion
+                        ログインして質問を作成
                     </a>
                     @endauth
 

@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        You are logged in!
+        ログインに成功しました！
     </div>
 </div>
 @endsection

@@ -23,7 +23,7 @@ class DiscussionsController extends Controller
     public function index()
     {
         return view('discussions.index', [
-            'discussions' => Discussion::filterByChannels()->paginate(3) //filterByChannelsはクエリスコープ
+            'discussions' => Discussion::filterByChannels()->orderBy('updated_at', 'desc')->paginate(3) //filterByChannelsはクエリスコープ
         ]);
     }
 
@@ -52,7 +52,7 @@ class DiscussionsController extends Controller
             'channel_id' => $request->channel
 
         ]);
-        session()->flash('success', 'Discussion posted.');
+        session()->flash('success', '質問が投稿されました！');
         return redirect()->route('discussions.index');
     }
 
@@ -75,9 +75,9 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Discussion $discussion)
     {
-        //
+        return view('discussions.edit', ['discussion' => $discussion]);
     }
 
     /**
@@ -87,9 +87,22 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateDiscussionRequest $request, Discussion $discussion)
     {
         //
+
+        $discussion->update(
+            [
+                'title' => $request->title,
+                'content' => $request->content,
+                'slug' => Str::slug($request->title),
+                'channel_id' => $request->channel
+
+            ]
+        );
+
+        session()->flash('success', '質問が修正されました！');
+        return redirect()->route('discussions.index');
     }
 
     /**
@@ -98,14 +111,18 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Discussion $discussion)
     {
         //
+
+        $discussion->delete();
+        session()->flash('success', '質問の削除が成功しました。');
+        return redirect()->back();
     }
     public function reply(Discussion $discussion, Reply $reply) //$discussionにはslugがわたり,$replyにはidが渡る
     {
         $discussion->markAsBestReply($reply);
-        session()->flash('success', 'Marked as best reply.');
+        session()->flash('success', '回答をベストアンサーとして認定しました！あとからでも変更可能です。');
         return redirect()->back();
     }
 }

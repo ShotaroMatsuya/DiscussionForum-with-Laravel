@@ -20,10 +20,10 @@ class Discussion extends Model
     {
         return $this->belongsTo(User::class, 'user_id'); //foreignKeyを第2引数にセットする
     }
-    public function getRouteKeyName() //route-model-bindingを使うときデフォルトではidを参照する
-    {
-        return 'slug'; //slugを参照するようにoverwriteした
-    }
+    // public function getRouteKeyName() //route-model-bindingを使うときデフォルトではidを参照する
+    // {
+    //     return 'slug'; //slugを参照するようにoverwriteした
+    // }
     public function replies() //すべてのreplyを取得
     {
         return $this->hasMany(Reply::class);
