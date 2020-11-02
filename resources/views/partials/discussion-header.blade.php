@@ -7,6 +7,7 @@
         <div class="ml-auto">
 
             <div class="d-flex">
+                {{-- ログインしていないとき --}}
                 @guest
                 @if(in_array(request()->path(),['discussions']))
                 <a href="{{route('discussions.show',$discussion->id)}}" class="btn btn-success btn-sm">View</a>
@@ -14,7 +15,7 @@
 
                 @endguest
 
-
+                {{-- ログインしているとき --}}
                 @auth
                 @if(!in_array(request()->path(),['discussions']))
                     @if ( auth()->user()->id == $discussion->author->id)

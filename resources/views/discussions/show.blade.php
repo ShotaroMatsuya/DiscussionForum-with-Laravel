@@ -76,6 +76,7 @@
         </div>
 
         <div class="card-body">
+            {{-- ログインしているとき --}}
             @auth
             <form action="{{route('replies.store',$discussion->id)}}" method="POST">
                 @csrf

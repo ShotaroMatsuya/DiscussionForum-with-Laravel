@@ -44,7 +44,7 @@ class RepliesController extends Controller
             'discussion_id' => $discussion->id
         ]);
 
-        if ($discussion->author->id != auth()->user()->id) { //discussionのauthorとreplyのuserが同じ場合にはnotifyを実行しない
+        if ($discussion->author->id != auth()->user()->id) { //discussionのauthorとreplyのuserが同じ場合にはnotifyを実行しない。
 
             $discussion->author->notify(new NewReplyAdded($discussion)); //emailとdatabaseにnotificationが送られる
         }
