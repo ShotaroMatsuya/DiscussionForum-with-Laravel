@@ -49,7 +49,7 @@ class NewReplyAdded extends Notification implements ShouldQueue //ShouldQueueク
     {
         return (new MailMessage)
             ->line('あなたの質問に対して返信がありました！！')
-            ->action('回答を確認する', route('discussions.show', $this->discussion->slug))
+            ->action('回答を確認する', route('discussions.show', $this->discussion->id))
             ->line('Thank you for using our application!');
     }
 

@@ -48,7 +48,7 @@ class ReplyMarkedAsBestReply extends Notification implements ShouldQueue //Shoul
     {
         return (new MailMessage)
             ->line('あなたの投稿がBestAnswerに選ばれました！！')
-            ->action('フォーラムを確認する', route('discussions.show', $this->discussion->slug))
+            ->action('フォーラムを確認する', route('discussions.show', $this->discussion->id))
             ->line('Thank you for using our application!');
     }
 
